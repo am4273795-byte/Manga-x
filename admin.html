@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manga X - لوحة التحكم</title>
+    <title>Book X - لوحة التحكم</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: { extend: { colors: { primary: '#FF2E93', darkBg: '#0F172A', cardBg: '#1E293B' } } }
+            theme: { extend: { colors: { primary: '#6366F1', darkBg: '#0F172A', cardBg: '#1E293B' } } }
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,69 +17,45 @@
 </head>
 <body class="bg-darkBg text-slate-100 min-h-screen p-6">
 
-    <div class="max-w-7xl mx-auto space-y-8">
+    <div class="max-w-5xl mx-auto space-y-8">
         <!-- Header -->
         <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-            <h1 class="text-3xl font-black text-primary flex items-center gap-2">
-                <i class="fa-solid fa-user-shield"></i> لوحة تحكم المالك (MANGA X)
+            <h1 class="text-2xl font-black text-primary flex items-center gap-2">
+                <i class="fa-solid fa-sliders"></i> لوحة إدارة الكتب (Book X)
             </h1>
-            <a href="index.html" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm font-bold transition">العودة للموقع</a>
+            <a href="index.html" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm font-bold transition">العودة للمكتبة</a>
         </div>
 
-        <!-- Dashboard Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 flex items-center justify-between">
-                <div>
-                    <p class="text-slate-400 text-sm">إجمالي المانجا</p>
-                    <h3 id="statManga" class="text-3xl font-black mt-1">0</h3>
-                </div>
-                <i class="fa-solid fa-book text-4xl text-primary/40"></i>
-            </div>
-            <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 flex items-center justify-between">
-                <div>
-                    <p class="text-slate-400 text-sm">عدد الأعضاء</p>
-                    <h3 id="statUsers" class="text-3xl font-black mt-1">0</h3>
-                </div>
-                <i class="fa-solid fa-users text-4xl text-blue-500/40"></i>
-            </div>
-            <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 flex items-center justify-between">
-                <div>
-                    <p class="text-slate-400 text-sm">البلاغات المستلمة</p>
-                    <h3 id="statReports" class="text-3xl font-black mt-1">0</h3>
-                </div>
-                <i class="fa-solid fa-triangle-exclamation text-4xl text-amber-500/40"></i>
-            </div>
-        </div>
-
-        <!-- Add Manga Section -->
+        <!-- Add Book Form -->
         <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h2 class="text-xl font-bold text-primary flex items-center gap-2">
-                <i class="fa-solid fa-plus-circle"></i> إضافة مانجا جديدة
+            <h2 class="text-lg font-bold text-primary flex items-center gap-2">
+                <i class="fa-solid fa-plus-circle"></i> إضافة كتاب أو رواية جديدة
             </h2>
-            <form id="addMangaForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" id="mangaTitle" placeholder="اسم المانجا" required class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none focus:border-primary">
-                <input type="text" id="mangaGenre" placeholder="التصنيف (أكشن، مغامرة...)" required class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none focus:border-primary">
-                <input type="url" id="mangaCover" placeholder="رابط صورة الغلاف (URL)" required class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none focus:border-primary col-span-full">
-                <textarea id="mangaDesc" placeholder="وصف وقصة المانجا..." class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none focus:border-primary col-span-full h-24"></textarea>
-                <button type="submit" class="bg-primary hover:bg-rose-600 text-white font-bold py-3 rounded-xl col-span-full transition">حفظ ونشر المانجا</button>
+            <form id="addBookForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="bookTitle" placeholder="عنوان الكتاب / الرواية" required class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-primary">
+                <input type="text" id="bookAuthor" placeholder="اسم الكاتب / المؤلف" required class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-primary">
+                
+                <select id="bookCategory" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-primary text-slate-300">
+                    <option value="روايات">روايات</option>
+                    <option value="تنمية بشرية">تنمية بشرية</option>
+                    <option value="تاريخ">تاريخ</option>
+                    <option value="برمجة وتقنية">برمجة وتقنية</option>
+                    <option value="علوم">علوم</option>
+                    <option value="أخرى">أخرى</option>
+                </select>
+
+                <input type="url" id="bookCover" placeholder="رابط صورة الغلاف (Image URL)" required class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-primary">
+                <input type="url" id="bookPdfUrl" placeholder="رابط قراءة / تحميل الـ PDF" required class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-primary col-span-full">
+                
+                <textarea id="bookDesc" placeholder="نبذة مختصرة عن الكتاب..." class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm outline-none focus:border-primary col-span-full h-24"></textarea>
+                
+                <button type="submit" class="bg-primary hover:opacity-90 text-white font-bold py-3 rounded-xl col-span-full transition">حفظ ونشر الكتاب</button>
             </form>
-        </div>
-
-        <!-- User Promotion Section -->
-        <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h2 class="text-xl font-bold text-blue-400 flex items-center gap-2">
-                <i class="fa-solid fa-user-plus"></i> رفع مستخدم لدرجة أدمن (Admin)
-            </h2>
-            <div class="flex gap-4">
-                <input type="email" id="adminEmail" placeholder="البريد الإلكتروني للمستخدم" class="bg-slate-900 border border-slate-700 p-3 rounded-xl outline-none focus:border-blue-400 flex-grow">
-                <button onclick="promoteToAdmin()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 rounded-xl transition">منح الصلاحية</button>
-            </div>
         </div>
     </div>
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
     <script>
@@ -94,35 +70,21 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // إضافة مانجا
-        document.getElementById('addMangaForm').addEventListener('submit', (e) => {
+        document.getElementById('addBookForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            db.collection("manga").add({
-                title: document.getElementById('mangaTitle').value,
-                genre: document.getElementById('mangaGenre').value,
-                coverUrl: document.getElementById('mangaCover').value,
-                description: document.getElementById('mangaDesc').value,
+            db.collection("books").add({
+                title: document.getElementById('bookTitle').value,
+                author: document.getElementById('bookAuthor').value,
+                category: document.getElementById('bookCategory').value,
+                coverUrl: document.getElementById('bookCover').value,
+                pdfUrl: document.getElementById('bookPdfUrl').value,
+                description: document.getElementById('bookDesc').value,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
-                alert("تمت إضافة المانجا بنجاح!");
-                document.getElementById('addMangaForm').reset();
-            });
+                alert("تمت إضافة الكتاب بنجاح إلى المكتبة!");
+                document.getElementById('addBookForm').reset();
+            }).catch(err => alert("حدث خطأ: " + err.message));
         });
-
-        // تحديث الإحصائيات
-        db.collection("manga").onSnapshot(snap => document.getElementById('statManga').innerText = snap.size);
-        db.collection("users").onSnapshot(snap => document.getElementById('statUsers').innerText = snap.size);
-        db.collection("reports").onSnapshot(snap => document.getElementById('statReports').innerText = snap.size);
-
-        function promoteToAdmin() {
-            const email = document.getElementById('adminEmail').value;
-            if(!email) return alert("يرجى كتابة البريد الإلكتروني");
-            db.collection("users").where("email", "==", email).get().then(snap => {
-                if(snap.empty) return alert("المستخدم غير موجود");
-                snap.docs[0].ref.update({ role: "admin" }).then(() => alert("تمت الترقية لأدمن بنجاح!"));
-            });
-        }
     </script>
 </body>
-  </html>
-
+</html>
