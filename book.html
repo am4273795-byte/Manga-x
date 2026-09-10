@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book X - تفاصيل الكتاب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { primary: '#6366F1', darkBg: '#0F172A', cardBg: '#1E293B' } } }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Cairo', sans-serif; } </style>
+</head>
+<body class="bg-darkBg text-slate-100 min-h-screen">
+
+    <nav class="p-4 bg-cardBg border-b border-slate-800 flex justify-between items-center sticky top-0 z-50">
+        <a href="index.html" class="text-primary font-bold flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-arrow-right"></i> العودة للمكتبة
+        </a>
+        <h1 id="bookTitleNav" class="font-bold text-base text-slate-200 truncate max-w-xs">جاري التحميل...</h1>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 space-y-6 my-6">
+        <div id="bookDetails" class="bg-cardBg p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row gap-6">
+            <!-- التفاصيل تظهر هنا -->
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyCiHNEcRyiV9Siy5sB1dHTBcypMJMorF2Q",
+          authDomain: "mangax-18232.firebaseapp.com",
+          projectId: "mangax-18232",
+          storageBucket: "mangax-18232.firebasestorage.app",
+          messagingSenderId: "852304213792",
+          appId: "1:852304213792:web:068c656f7ccaf94ced0945"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('id');
+
+        if(bookId) {
+            db.collection("books").doc(bookId).get().then(doc => {
+                if(doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('bookTitleNav').innerText = data.title;
+                    document.getElementById('bookDetails').innerHTML = `
+                        <img src="${data.coverUrl}" class="w-full md:w-56 h-80 object-cover rounded-xl border border-slate-700 shadow-xl">
+                        <div class="space-y-4 flex-1">
+                            <h2 class="text-2xl md:text-3xl font-black text-white">${data.title}</h2>
+                            <p class="text-sm text-slate-400"><i class="fa-solid fa-user-pen ml-1"></i> الكاتب: <span class="text-slate-200 font-semibold">${data.author || 'غير معروف'}</span></p>
+                            <div>
+                                <span class="bg-primary/20 text-primary border border-primary/30 px-3 py-1 rounded-full text-xs font-semibold inline-block">${data.category}</span>
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed">${data.description || 'لا يوجد وصف متاح لهذا الكتاب.'}</p>
+                            
+                            <div class="pt-4 flex flex-wrap gap-3">
+                                <a href="${data.pdfUrl}" target="_blank" class="bg-primary hover:opacity-90 text-white font-bold py-3 px-6 rounded-xl text-sm transition flex items-center gap-2">
+                                    <i class="fa-solid fa-file-pdf"></i> قراءة / تحميل الكتاب PDF
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
